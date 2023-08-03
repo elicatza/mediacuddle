@@ -9,8 +9,8 @@ const BRIGHTNESS_DEVICE: &str = "/sys/class/backlight/acpi_video0";
 pub fn send_notification(brightness: i32) {
     let brightness = if brightness < 0 { 0 } else { to_percent(brightness) };
     let icon_path: &str = match brightness {
-        x if x <= 100 => "/usr/share/icons/Adwaita/96x96/status/display-brightness-symbolic.symbolic.png",
-        _ => "/usr/share/icons/Adwaita/96x96/status/dialog-warning-symbolic.symbolic.png",
+        x if x <= 100 => "/usr/share/icons/Adwaita/symbolic/status/display-brightness-symbolic.svg",
+        _ => "/usr/share/icons/Adwaita/symbolic/status/dialog-warning-symbolic.svg",
     };
 
     match Notification::new()

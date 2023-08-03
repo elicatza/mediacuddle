@@ -1,0 +1,7 @@
+#compdef mediacuddle
+
+function _mediacuddle {
+    _arguments _
+}
+
+_mediacuddle "$@"

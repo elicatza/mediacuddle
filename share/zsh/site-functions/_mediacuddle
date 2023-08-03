@@ -1,0 +1,62 @@
+#compdef mediacuddle
+
+# Following: https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+
+
+_mediacuddle() {
+    # local curcontext="$curcontext" ret=1
+    local -a line state
+
+    local -a common commonsub
+    common=(
+        '(-h --help)'{-h,--help}'[Print this message or the help of the given subcommand]'
+        '(-V --version)'{-V,--version}'[Print version information]'
+    )
+    commonsub=(
+        '(-a --alert)'{-a,--alert}'[Send notification]'
+    )
+
+    _arguments -s -S -A $common ':command:->command' '*::options:->options'
+    case $state in
+        (command)
+
+            local -a commands
+            commands=(
+                'brightness:Control brightness'
+                'keymap:Control keymap'
+                'playback:Control playback'
+                'volume:Control volume'
+            )
+            _describe -t commands command commands
+            ;;
+        (options)
+            case $line[1] in
+                (brightness)
+                    _arguments -s -S -A $common $commonsub \
+                        '(-d --decrement)'{-d+,--decrement+}'[Decrement brightness]:number' \
+                        '(-g --get)'{-g,--get}'[Get current brightness]' \
+                        '(-i --increment)'{-i+,--increment+}'[Increment brightness]:number' \
+                        '(-m --get-max)'{-m,--get-max}'[Get max brightness]' \
+                        '(-s --set)'{-s+,--set+}'[Set brightness]:number'
+                    ;;
+                (keymap)
+                    _arguments -s -S -A $common $commonsub
+                    ;;
+                (playback)
+                    _arguments -s -S -A $common $commonsub \
+                        '(-n --next)'{-n,--next}'[Skip to next track]' \
+                        '(-p --previous)'{-p,--previous}'[Skip to previous track]' \
+                        '(-t --toggle)'{-t,--toggle}'[Toggle between play and pause]' \
+                    ;;
+                (volume)
+                    _arguments -s -S -A $common $commonsub \
+                        '(-d --decrement)'{-d+,--decrement+}'[Decrement volume]' \
+                        '(-g --get)'{-g,--get}'[Get volume]' \
+                        '(-i --increment)'{-i+,--increment+}'[Increment volume]' \
+                        '(-s --set)'{-s+,--set+}'[Set volume]' \
+                    ;;
+            esac
+    esac
+}
+
+_mediacuddle
